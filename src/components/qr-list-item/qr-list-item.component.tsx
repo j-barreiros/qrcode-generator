@@ -14,7 +14,7 @@ type QrListItemProps = {
 
 const QRListItem = ({ qr }: QrListItemProps) => {
 
-    const { id, title, originalText } = qr;
+    const { id, originalText } = qr;
     const { deleteQR } = useContext(QRDataContext);
 
     const { changeMode, setSelectedQR } = useContext(APPContext);
@@ -29,17 +29,25 @@ const QRListItem = ({ qr }: QrListItemProps) => {
         deleteQR(id);
     }
 
+    const limitQRTitleSize = (fullTitle:string, maxSize:number) => {
+        if(fullTitle.length > maxSize) {
+            return fullTitle.slice(0,maxSize).concat("...");
+        } else {
+            return fullTitle;
+        }
+    }
+
     return (
         <QrListItemContainer onClick={handleClick}>
             <section className="qr-info">
-                <div className="qr-miniature">
+                <div className="qr-miniature" title={originalText}>
                     <QRCode
                         value={originalText}
                         size={30}
                         quietZone={3}
                     />
                 </div>
-                <p className="qr-title">{title}</p>
+                <p className="qr-title" title={originalText}>{limitQRTitleSize(originalText, 20)}</p>
             </section>
             <button
                 className='delete-btn'

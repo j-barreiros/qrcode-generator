@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { QRContextType, QRType } from "./qrdata.types";
 
 const initialState = {
     qrList: [],
-    addQR: (qrTitle: string, originalText: string) => null,
+    addQR: (originalText: string) => null,
     deleteQR: (qrId: number) => null,
 }
 
@@ -16,20 +16,33 @@ type QRDataContextProviderProps = {
 
 const QRDataContextProvider = ({ children }: QRDataContextProviderProps) => {
 
-    const [qrList, setQRList] = useState([] as QRType[]);
+    const getFromLocalStorage = () => {
+        const qrFromLocalStorage = JSON.parse(localStorage.getItem('QRList') || "");
+        if(qrFromLocalStorage) {
+            return qrFromLocalStorage as QRType[];
+        } else {
+            return [] as QRType[];
+        }
+    }
+
+    const [qrList, setQRList] = useState(() => getFromLocalStorage());
+
+    useEffect(() => {
+        localStorage.setItem("QRList",JSON.stringify(qrList));
+    }, [qrList])
+    
+
 
     const contextValue = {
         qrList: qrList,
-        addQR: (qrTitle: string, originalText: string) => {
+        addQR: (originalText: string) => {
             setQRList([
                 {
                     id: Math.floor(Math.random() * 100),
-                    title: qrTitle,
                     originalText: originalText
                 },
                 ...qrList
-            ]
-            );
+            ]);
         },
         deleteQR: (filteredQrId: number) => {
             setQRList(qrList.filter(qr => qr.id != filteredQrId))

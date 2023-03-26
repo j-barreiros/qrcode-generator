@@ -23,7 +23,7 @@ const QRList = () => {
       <Button
         size="small"
         onClick={() => changeMode('create')}
-        text={"Create new QR"}
+        text={"CREATE NEW QR"}
       />
       <section className="list">
         {qrList.map(qr => <QRListItem key={qr.id} qr={qr} />)}
