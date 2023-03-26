@@ -26,7 +26,7 @@ const QRList = () => {
         text={"CREATE NEW QR"}
       />
       <section className="list">
-        {qrList.map(qr => <QRListItem key={qr.id} qr={qr} />)}
+        {qrList.length > 0 && qrList.map(qr => <QRListItem key={qr.id} qr={qr} />)}
       </section>
     </QRListContainer>
   )

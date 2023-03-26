@@ -2,7 +2,6 @@ import React from "react";
 import { useContext } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { APPContext } from "../../context/appcontext/appcontext.context";
-import Button from "../button/button.component";
 // Style
 import { DisplayQRContainer } from "../display-qr/display-qr.style"
 

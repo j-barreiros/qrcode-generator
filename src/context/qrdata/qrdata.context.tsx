@@ -17,8 +17,8 @@ type QRDataContextProviderProps = {
 const QRDataContextProvider = ({ children }: QRDataContextProviderProps) => {
 
     const getFromLocalStorage = () => {
-        const qrFromLocalStorage = JSON.parse(localStorage.getItem('QRList') || "");
-        if(qrFromLocalStorage) {
+        const qrFromLocalStorage = JSON.parse(localStorage.getItem('QRList') || "{}");
+        if(qrFromLocalStorage !== undefined) {
             return qrFromLocalStorage as QRType[];
         } else {
             return [] as QRType[];
